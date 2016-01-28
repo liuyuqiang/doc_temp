@@ -1086,7 +1086,7 @@ OBJ_HANDLER：在OBJ_HT中操作一个特殊的handler方法。
 				<td>ZVAL_RESOURCE(pzv, res);</td>
 				<td>Z_TYPE_P(pzv) = IS_RESOURCE;<br />Z_RESVAL_P(pzv) = res;</td>
 			</tr>			
-		</table>
+</table>
 
 
 ### ZVAL_STRINGL(pzv,str,len,dup)中的dup参数
