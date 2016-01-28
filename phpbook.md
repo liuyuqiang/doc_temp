@@ -1465,7 +1465,8 @@ void call_function(const char *fname, int fname_len TSRMLS_DC)
 			<td>void free(void *ptr);</td>
 			<td>void efree(void *ptr);<br />void pefree(void *ptr, char persistent);</td>
 		</tr>
-	</table>
+</table>
+
 你可能会注意到，即使是pefree()函数也要求使用永久性标志。这是因为在调用pefree()时，它实际上并不知道是否ptr是一种永久性分配。需要注意的是，如果针对一个ZendMM申请的非永久性内存直接调用free()能够导致双倍的空间释放，而针对一种永久性分配调用efree()有可能会导致一个段错误，因为ZendMM需要去查找并不存在的管理信息。因此，你的代码需要记住它申请的内存是否是永久性的，从而选择不同的内存函数，free()或者efree()。 
 除了上述内存管理函数外，还存在其它一些非常方便的ZendMM函数，例如：
 ````c
@@ -4823,7 +4824,9 @@ $c = &$a;
 
 # 9.4 PHP中的资源类型 
 
-通过这一章介绍的技术，我们已经可以使用PHP中{资源}了，这将使我们更容易的在扩展中使用一些第三方库，比如使用zip扩展时，我们需要把它的一些特殊的量封装成资源供脚本使用。这无疑极大的增强了PHP的威力！{资源}V5!<p>
+
+通过这一章介绍的技术，我们已经可以使用PHP中{资源}了，这将使我们更容易的在扩展中使用一些第三方库，比如使用zip扩展时，我们需要把它的一些特殊的量封装成资源供脚本使用。这无疑极大的增强了PHP的威力！{资源}V5!
+
 下一章将会说一下PHP中的对象！原书中分别讲述了PHP4与PHP5的实现，这里我没有参照原书的安排，按照自己的理解完全重写了这一部分，以PHP5为基础讲述，确切的说，是以PHP5.3.6讲述，这个版本问题我也已经在本书开头说明了，因为我私自认为PHP4已经不再重要了。
 
 
@@ -4976,13 +4979,17 @@ ZEND_MINIT_FUNCTION(test)
 }
 
 ````
+
 ### 为类定义属性
+
 我们可以用zend_declare_property*系列函数来完成这项操作，为某个类定义属性一般会需要三个信息：
+
 <ul>
 	<li>属性的名称</li>
 	<li>属性的默认值</li>
 	<li>属性的访问权限等</li>
 </ul>
+
 我们为上面的myclass类定义一个名为“public_var”的属性，默认值为null，访问权限为public。
 ````c
 ZEND_MINIT_FUNCTION(test)
@@ -6526,43 +6533,43 @@ options是位域的标记值集合, 这里是设置为下面介绍的一组固�
         <td>USE_PATH</td>
         <td>将php.ini文件中的include_path应用到相对路径上. 内建函数fopen()在指定第三个参数为TRUE时将会设置这个选项.</td>
         </tr>
-<tr>
-<td>STREAM_USE_URL</td>
+        <tr>
+        <td>STREAM_USE_URL</td>
 
-<td>设置这个选项后, 将只能打开远端URL. 对于php://, file://, zlib://, bzip2://这些URL包装器并不认为它们是远端URL.</td></tr>
+        <td>设置这个选项后, 将只能打开远端URL. 对于php://, file://, zlib://, bzip2://这些URL包装器并不认为它们是远端URL.</td></tr>
 
-<tr><td>ENFORCE_SAFE_MODE</td>
+        <tr><td>ENFORCE_SAFE_MODE</td>
 
-<td>尽管这个常量这样命名, 但实际上设置这个选项后仅仅是启用了安全模式(php.ini文件中的safe_mode指令)的强制检查. 如果没有设置这个选项将导致跳过safe_mode的检查(不论INI设置中safe_mode如何设置)</td></tr>
+        <td>尽管这个常量这样命名, 但实际上设置这个选项后仅仅是启用了安全模式(php.ini文件中的safe_mode指令)的强制检查. 如果没有设置这个选项将导致跳过safe_mode的检查(不论INI设置中safe_mode如何设置)</td></tr>
 
 
-<tr><td>REPORT_ERRORS</td>
+        <tr><td>REPORT_ERRORS</td>
 
-<td>在指定的资源打开过程中碰到错误时, 如果设置了这个选项则将产生错误报告.</td></tr>
+        <td>在指定的资源打开过程中碰到错误时, 如果设置了这个选项则将产生错误报告.</td></tr>
 
-<tr><td>STREAM_MUST_SEEK</td>
+        <tr><td>STREAM_MUST_SEEK</td>
 
-<td>对于某些流, 比如套接字, 是不可以seek的(随机访问); 这类文件句柄, 只有在特定情况下才可以seek. 如果调用作用域指定这个选项, 并且包装器检测到它不能保证可以seek, 将会拒绝打开这个流.</td></tr>
+        <td>对于某些流, 比如套接字, 是不可以seek的(随机访问); 这类文件句柄, 只有在特定情况下才可以seek. 如果调用作用域指定这个选项, 并且包装器检测到它不能保证可以seek, 将会拒绝打开这个流.</td></tr>
 
-<tr><td>STREAM_WILL_CAST</td>
+        <tr><td>STREAM_WILL_CAST</td>
 
-<td>如果调用作用域要求流可以被转换到stdio或posix文件描述符, 则应该给open_wrapper函数传递这个选项, 以保证在I/O操作发生之前就失败</td></tr>
+        <td>如果调用作用域要求流可以被转换到stdio或posix文件描述符, 则应该给open_wrapper函数传递这个选项, 以保证在I/O操作发生之前就失败</td></tr>
 
-<tr><td>STREAM_ONLY_GET_HEADERS</td>
-<td>标识只需要从流中请求元数据. 实际上这是用于http包装器, 获取http_response_headers全局变量而不真正的抓取远程文件内容.</td></tr>
+        <tr><td>STREAM_ONLY_GET_HEADERS</td>
+        <td>标识只需要从流中请求元数据. 实际上这是用于http包装器, 获取http_response_headers全局变量而不真正的抓取远程文件内容.</td></tr>
 
-<tr><td>STREAM_DISABLE_OPEN_BASEDIR</td>
-<td>类似safe_mode检查, 不设置这个选项则会检查INI设置open_basedir, 如果指定这个选项则可以绕过这个默认的检查</td></tr>
+        <tr><td>STREAM_DISABLE_OPEN_BASEDIR</td>
+        <td>类似safe_mode检查, 不设置这个选项则会检查INI设置open_basedir, 如果指定这个选项则可以绕过这个默认的检查</td></tr>
 
-<tr><td>STREAM_OPEN_PERSISTENT</td>
-<td>告知流包装层, 所有内部分配的空间都采用持久化分配, 并将关联的资源注册到持久化列表中.</td></tr>
+        <tr><td>STREAM_OPEN_PERSISTENT</td>
+        <td>告知流包装层, 所有内部分配的空间都采用持久化分配, 并将关联的资源注册到持久化列表中.</td></tr>
 
-<tr><td>IGNORE_PATH</td>
- 
-<td>如果不指定, 则搜索默认的包含路径. 多数URL包装器都忽略这个选项.</td></tr>
+        <tr><td>IGNORE_PATH</td>
+         
+        <td>如果不指定, 则搜索默认的包含路径. 多数URL包装器都忽略这个选项.</td></tr>
 
-<tr><td>IGNORE_URL</td> 
-<td>提供这个选项时, 流包装层只打开本地文件. 所有的is_url包装器都将被忽略.</td></tr>
+        <tr><td>IGNORE_URL</td> 
+        <td>提供这个选项时, 流包装层只打开本地文件. 所有的is_url包装器都将被忽略.</td></tr>
 </table>
 
 最后的NULL参数是char **类型, 它最初是用来设置匹配路径, 如果path指向普通文件URL, 则去掉file://部分, 保留直接的文件路径用于传统的文件名操作. 这个参数仅仅是以前引擎内部处理使用的.
