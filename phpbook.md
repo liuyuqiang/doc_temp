@@ -1632,9 +1632,9 @@ if ((*varval)->is_ref || (*varval)->refcount < 2) {
 ````
 这里我们可以看到,$a,$b,$c这三个变量现在共用一个zval结构，有两个属于change-on-write组合($a,$c),有两个属于copy-on-write组合($a,$b),我们的is_ref__gc和refcount__gc该怎样工作，才能正确的处理好这段复杂的关系呢？
 The answer is: 不可能！在这种情况下，变量的值必须分离成两份完全独立的存在！$a与$c共用一个zval,$b自己用一个zval，尽管他们拥有同样的值，但是必须至少通过两个zval来实现。见图3.2【在引用时强制复制！】
-    	<p style="text-align:center"><img src="http://www.walu.cc/phpbook/image/03fig02.jpg" />
+    	<p style="text-align:center"><img src="http://www.walu.cc/phpbook/image/03fig02.jpg" /></p>
 同样，下面的这段代码同样会在内核中产生歧义，所以需要强制复制！
-    	<p style="text-align:center"><img src="http://www.walu.cc/phpbook/image/03fig03.jpg" />
+    	<p style="text-align:center"><img src="http://www.walu.cc/phpbook/image/03fig03.jpg" /></p>
 ````php
     //上图对应的代码
 	$a = 1;
@@ -1711,7 +1711,8 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 			<li>bison: 1.28, 1.35, 1.75, 2.0 or higher</li>
 			<li>flex (PHP 5.2 and earlier): 2.5.4 (not higher)</li>
 			<li>re2c: 0.13.4+</li>
-		</ul>
+</ul>
+
 你千万不要被上面的清单给吓着，其实系统应该给装备好了，除非真RP低，那你出门去买张彩票吧... ...
 当然，我们也可以通过SVN从PHP源码库里导出一份源码，需要注意的是，PHP的svn源码库地址是https协议的。官方推荐我们直接签出它的php-src目录:
 ````shell
@@ -1724,11 +1725,12 @@ $ cd php-src
 <li>PHP 5.3: svn checkout https://svn.php.net/repository/php/php-src/branches/PHP_5_3 php-src-5.3 </li>
 <li>PHP 5.4: svn checkout https://svn.php.net/repository/php/php-src/branches/PHP_5_4 php-src-5.4  </li>
 <li>PHP HEAD: svn checkout https://svn.php.net/repository/php/php-src/trunk php-src-trunk  </li>
-		</ul>
+</ul>
+
 最新的大家可以来这查看：http://php.net/svn.php
 ### Win32 Tools
 这里仅代表作者05年的观点，我还没有在win平台下测试过，稍後会把这段修正过来。
-		<pre>
+<pre>
 The Win32/PHP5 build system is a complete rewrite and represents a significant leap forward from the PHP4 build system. Instructions for compiling PHP4 under Windows are available on php.net, only the PHP5 build systemwhich requires Windows 2000, Windows 2003, or Windows XPwill be discussed here.
 
 First, you'll need to grab libraries and development headers used by many of the core PHP extensions. Fortunately, many of these files are redistributed from php.net as a single .zip file located at http://www.php.net/extra/win32build.zip.
@@ -1748,7 +1750,8 @@ As before, proceed through the first few screens as you would with any other ins
 So unless you're byte conscious, select Typical and proceed through the next couple of standard issue screens until the installer begins copying and registering files. This process should take a few minutes so grab some popcorn.
 
 Once installation is complete you'll have a new item on your Start menuMicrosoft Platform SDK for Windows Server 2003 SP1.		
-		</pre>
+</pre>
+
 ### 获取PHP源码
 其实你有很多办法安装PHP，最简单的一种就是从你系统的库或者源里通过apt-get、yum install之类的命令直接安装PHP5，这样做的好处你的系统可能会自动处理一些php在它上面的工作时的一些bug，而且你还可以方便的升级与卸载。这样做也有缺点，那就是你的PHP版本永远无法是最新的，通常www.php.net发布数周甚至数月后你才能用上相应的版本。
 第二种方法：也是推荐使用的一种方法，那就是自行下载php-x.y.z.tar.gz的源码包，然后自行编译安装。这种包一般都是经过了海量的测试后才发布的，而且非常接近最新beta或者alpha版本。
@@ -2063,7 +2066,9 @@ Zend Extension Api No: 220050617
 ````
 
 <div class="tip-common">
-	The extra 2 at the start of Zend Extension Api No isn't a typo; it corresponds to the Zend Engine 2 version and is meant to keep this API number greater than its ZE1 counterpart.</div>
+	The extra 2 at the start of Zend Extension Api No isn't a typo; it corresponds to the Zend Engine 2 version and is meant to keep this API number greater than its ZE1 counterpart.
+</div>
+
 现在查看一下我们扩展所在的目录，会发现多了许多文件。phpize程序根据config.m4里的信息生成了许多编译php扩展必须的文件，比如生成makefiles等，这为我们省了很多的麻烦。
 接下来我们运行./configure脚本，这里我们并不需要再注明enable-maintainer-zts、enable-debug等参数，phpize程序会自动的去已经编译完成的php核心里获取这几个参数的值。
 接下来就像我们安装其它程序一样执行make; make test;即可，如果没有错误，那么在module文件夹下面便会生成我们的目标文件 —— walu.so。
