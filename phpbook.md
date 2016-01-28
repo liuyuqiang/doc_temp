@@ -4353,12 +4353,13 @@ if (!fp)
 ````
 zend_fetch_resource()是对zend_hash_find()的一层封装，它使用一个数字key去一个保存各种{资源}的HashTable中寻找最终需要的数据，找到之后，我们用ZEND_VERIFY_RESOURCE()宏函数校验一下这个数据。从上面的代码中我们可以看出，NULL、0是绝对不能作为一种资源的。 
 上面的例子中，zend_fetch_resource()函数首先获取le_sample_descriptor代表的资源类型，如果资源不存在或者接收的zval不是一个资源类型的变量，它便会返回NULL，并抛出相应的错误信息。
-最后的ZEND_VERIFY_RESOURCE()宏函数如果检测到错误，便会自动返回，使我们可以从错误检测中脱离出来，更加专注于程序的主逻辑。现在我们已经获取到了相应的FILE*了，下面就用fwrite()向其中写入点数据吧！。<p>
+最后的ZEND_VERIFY_RESOURCE()宏函数如果检测到错误，便会自动返回，使我们可以从错误检测中脱离出来，更加专注于程序的主逻辑。现在我们已经获取到了相应的FILE*了，下面就用fwrite()向其中写入点数据吧！。
 	<div class="tip-common">
 	To avoid having zend_fetch_resource() generate an error on failure, simply pass NULL for the resource_type_name parameter. Without a meaningful error message to display, zend_fetch_resource() will fail silently instead.
 	</div>
 
 我们也可以通过另一种方法来获取我们最终想要的数据。
+
 ````c
 ZEND_FUNCTION(sample_fwrite)
 {
