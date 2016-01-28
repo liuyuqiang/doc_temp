@@ -1633,9 +1633,9 @@ if ((*varval)->is_ref || (*varval)->refcount < 2) {
 
 这里我们可以看到,$a,$b,$c这三个变量现在共用一个zval结构，有两个属于change-on-write组合($a,$c),有两个属于copy-on-write组合($a,$b),我们的is_ref__gc和refcount__gc该怎样工作，才能正确的处理好这段复杂的关系呢？
 The answer is: 不可能！在这种情况下，变量的值必须分离成两份完全独立的存在！$a与$c共用一个zval,$b自己用一个zval，尽管他们拥有同样的值，但是必须至少通过两个zval来实现。见图3.2【在引用时强制复制！】
-    	<p style="text-align:center"><img src="http://www.walu.cc/phpbook/image/03fig02.jpg" /></p>
+    	<img src="http://www.walu.cc/phpbook/image/03fig02.jpg" />
 同样，下面的这段代码同样会在内核中产生歧义，所以需要强制复制！
-    	<p style="text-align:center"><img src="http://www.walu.cc/phpbook/image/03fig03.jpg" /></p>
+    	<img src="http://www.walu.cc/phpbook/image/03fig03.jpg" />
 
 ````php
     //上图对应的代码
@@ -1644,15 +1644,13 @@ The answer is: 不可能！在这种情况下，变量的值必须分离成两�
 	$c = $a;    	
     	
 ````
+
 需要注意的是，在这两种情况下，$b都与原初的zval相关联，因为当复制发生时，内核还不知道第三个变量的名字。
 
 
 ## links
    * 3.1 [内存管理](<3.1.md>)
    * 3.3 [3.3 第三章总结](<3.3.md>)
-
-
-
 
 
 # 3.3 内存管理 
@@ -1664,9 +1662,6 @@ PHP是一种解释型的语言，对于用户而言，我们精心的控制内�
 ## links
    * 3.2 [引用计数](<3.2.md>)
    * 4 [动手编译PHP](<4.md>)
-
-
-
 
 
 # 4 动手编译PHP 
